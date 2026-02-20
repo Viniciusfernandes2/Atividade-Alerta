@@ -19,4 +19,5 @@ export const register = async (data: RegisterRequest) => {
   return response.data;
 };
 
+
 export default api;
