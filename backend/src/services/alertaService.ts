@@ -1,68 +1,110 @@
 import { pool } from "../database/connection";
-import { Alerta } from "../models/Alerta";
 
-export const criarAlerta = async (alerta: Alerta) => {
+interface Alerta {
 
-const result = await pool.query(
+    tipo: string;
+    descricao: string;
+    local: string;
+    data: string;
 
-"INSERT INTO alertas (titulo, descricao, tipo) VALUES ($1,$2,$3) RETURNING *",
+}
 
-[alerta.titulo, alerta.descricao, alerta.tipo]
 
-);
+export const criar = async (alerta: Alerta) => {
 
-return result.rows[0];
+    const result = await pool.query(
 
-};
+        `INSERT INTO alertas (tipo, descricao, local, data)
+         VALUES ($1, $2, $3, $4)
+         RETURNING *`,
 
-export const listarAlertas = async () => {
+        [
+            alerta.tipo,
+            alerta.descricao,
+            alerta.local,
+            alerta.data
+        ]
 
-const result = await pool.query(
+    );
 
-"SELECT * FROM alertas ORDER BY data DESC"
-
-);
-
-return result.rows;
-
-};
-
-export const filtrarTipo = async (tipo: string) => {
-
-const result = await pool.query(
-
-"SELECT * FROM alertas WHERE tipo=$1",
-
-[tipo]
-
-);
-
-return result.rows;
+    return result.rows[0];
 
 };
 
-export const atualizarStatus = async (id: number, status: string) => {
 
-const result = await pool.query(
+export const listar = async () => {
 
-"UPDATE alertas SET status=$1 WHERE id=$2 RETURNING *",
+    const result = await pool.query(
 
-[status, id]
+        `SELECT * FROM alertas
+         ORDER BY id DESC`
 
-);
+    );
 
-return result.rows[0];
+    return result.rows;
 
 };
+
+
+export const filtrar = async (tipo: string) => {
+
+    const result = await pool.query(
+
+        `SELECT * FROM alertas
+         WHERE tipo = $1`,
+
+        [tipo]
+
+    );
+
+    return result.rows;
+
+};
+
+
+export const atualizar = async (
+
+    id: number,
+    alerta: Alerta
+
+) => {
+
+    const result = await pool.query(
+
+        `UPDATE alertas
+         SET tipo = $1,
+             descricao = $2,
+             local = $3,
+             data = $4
+         WHERE id = $5
+         RETURNING *`,
+
+        [
+            alerta.tipo,
+            alerta.descricao,
+            alerta.local,
+            alerta.data,
+            id
+        ]
+
+    );
+
+    return result.rows[0];
+
+};
+
 
 export const dashboard = async () => {
 
-const result = await pool.query(
+    const result = await pool.query(
 
-"SELECT tipo, COUNT(*) FROM alertas GROUP BY tipo"
+        `SELECT tipo, COUNT(*) as total
+         FROM alertas
+         GROUP BY tipo
+         ORDER BY total DESC`
 
-);
+    );
 
-return result.rows;
+    return result.rows;
 
 };
