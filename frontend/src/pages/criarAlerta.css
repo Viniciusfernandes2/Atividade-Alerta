@@ -1,0 +1,108 @@
+.alerta-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #062b16;
+  padding: 20px;
+}
+
+.alerta-card {
+  background-color: #08361d;
+  padding: 40px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.alerta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.alerta-form h2 {
+  color: white;
+  text-align: left;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.alerta-form input,
+.alerta-form select,
+.alerta-form textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  background: #e5e5e5;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.alerta-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.alerta-form select {
+  cursor: pointer;
+}
+
+.alerta-form button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2f80ed;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+
+.alerta-form button:hover {
+  background-color: #1c63c7;
+}
+
+.alerta-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.erro {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.sucesso {
+  color: #4caf50;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.campo-info {
+  color: #cccccc;
+  font-size: 12px;
+  margin-top: -10px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.nav-links a {
+  color: #2f80ed;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
