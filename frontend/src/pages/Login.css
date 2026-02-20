@@ -1,0 +1,66 @@
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Tela inteira */
+.login-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #062b16;
+}
+
+/* CARD CENTRAL (AGORA É UM QUADRADO) */
+.login-card {
+  background-color: #08361d;
+  padding: 40px;
+  border-radius: 10px;
+  width: 320px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Form */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Título */
+.login-form h2 {
+  color: white;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+/* Inputs */
+.login-form input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  background: #e5e5e5;
+  font-size: 14px;
+}
+
+/* Botão */
+.login-form button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2f80ed;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.login-form button:hover {
+  background-color: #1c63c7;
+}
