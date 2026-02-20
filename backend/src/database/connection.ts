@@ -7,7 +7,7 @@ host: "localhost",
 
 database: "alertas_db",
 
-password: "SUA_SENHA",
+password: "123",
 
 port: 5432,
 
