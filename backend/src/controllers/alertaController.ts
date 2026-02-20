@@ -1,48 +1,150 @@
 import { Request, Response } from "express";
 import * as service from "../services/alertaService";
 
-export const criar = async (req: Request, res: Response) => {
 
-  const alerta = await service.criarAlerta(req.body);
+export const criar = async (
+    req: Request,
+    res: Response
+) => {
 
-  res.json(alerta);
+    try {
+
+        const { tipo, descricao, local, data } = req.body;
+
+        if (!tipo || !descricao || !local || !data) {
+
+            return res.status(400).json({
+                erro: "Campos obrigatórios: tipo, descricao, local, data"
+            });
+
+        }
+
+        const alerta = await service.criar({
+
+            tipo,
+            descricao,
+            local,
+            data
+
+        });
+
+        return res.status(201).json(alerta);
+
+    }
+    catch {
+
+        return res.status(500).json({
+            erro: "Erro ao criar alerta"
+        });
+
+    }
 
 };
 
-export const listar = async (req: Request, res: Response) => {
 
-  const alertas = await service.listarAlertas();
+export const listar = async (
+    req: Request,
+    res: Response
+) => {
 
-  res.json(alertas);
+    try {
 
-};
+        const alertas = await service.listar();
 
-export const filtrar = async (req: Request, res: Response) => {
+        return res.json(alertas);
 
-  const tipo = req.params.tipo as string;
+    }
+    catch {
 
-  const alertas = await service.filtrarTipo(tipo);
+        return res.status(500).json({
+            erro: "Erro ao listar alertas"
+        });
 
-  res.json(alertas);
-
-};
-
-export const atualizar = async (req: Request, res: Response) => {
-
-  const id = Number(req.params.id);
-
-  const { status } = req.body;
-
-  const alerta = await service.atualizarStatus(id, status);
-
-  res.json(alerta);
+    }
 
 };
 
-export const dashboard = async (req: Request, res: Response) => {
 
-  const dados = await service.dashboard();
+export const filtrar = async (
+    req: Request<{ tipo: string }>,
+    res: Response
+) => {
 
-  res.json(dados);
+    try {
+
+        const { tipo } = req.params;
+
+        const alertas = await service.filtrar(tipo);
+
+        return res.json(alertas);
+
+    }
+    catch {
+
+        return res.status(500).json({
+            erro: "Erro ao filtrar alertas"
+        });
+
+    }
+
+};
+
+
+export const atualizar = async (
+    req: Request<{ id: string }>,
+    res: Response
+) => {
+
+    try {
+
+        const id = Number(req.params.id);
+
+        const { tipo, descricao, local, data } = req.body;
+
+        const alerta = await service.atualizar(
+
+            id,
+            {
+                tipo,
+                descricao,
+                local,
+                data
+            }
+
+        );
+
+        return res.json(alerta);
+
+    }
+    catch {
+
+        return res.status(500).json({
+            erro: "Erro ao atualizar alerta"
+        });
+
+    }
+
+};
+
+
+export const dashboard = async (
+    req: Request,
+    res: Response
+) => {
+
+    try {
+
+        const dados = await service.dashboard();
+
+        return res.json(dados);
+
+    }
+    catch {
+
+        return res.status(500).json({
+            erro: "Erro no dashboard"
+        });
+
+    }
 
 };

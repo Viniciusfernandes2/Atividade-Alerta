@@ -2,7 +2,7 @@ export interface Alerta {
 
 id?: number;
 
-titulo: string;
+local: string;
 
 descricao: string;
 
