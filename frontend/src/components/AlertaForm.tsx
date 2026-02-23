@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { criarAlerta } from "../services/alertaService";
+import { tiposAlerta } from "../types/Alerta";
 
 export default function AlertaForm() {
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
-    titulo: "",
-    descricao: "",
     tipo: "informativo",
+    descricao: "",
     local: "",
     data: "",
   });
@@ -16,14 +16,6 @@ export default function AlertaForm() {
   const [erro, setErro] = useState("");
   const [sucesso, setSucesso] = useState("");
   const [carregando, setCarregando] = useState(false);
-
-  const tiposAlerta = [
-    { valor: "informativo", label: "Informativo" },
-    { valor: "urgente", label: "Urgente" },
-    { valor: "critico", label: "Crítico" },
-    { valor: "manutencao", label: "Manutenção" },
-    { valor: "seguranca", label: "Segurança" },
-  ];
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -40,13 +32,6 @@ export default function AlertaForm() {
     setErro("");
     setSucesso("");
     setCarregando(true);
-
-    // Validações
-    if (!formData.titulo.trim()) {
-      setErro("O título é obrigatório");
-      setCarregando(false);
-      return;
-    }
 
     if (!formData.descricao.trim()) {
       setErro("A descrição é obrigatória");
@@ -67,31 +52,17 @@ export default function AlertaForm() {
     }
 
     try {
-      // Adiciona o local e data à descrição ou cria campos separados
-      // Como o backend atual só tem titulo, descricao e tipo,
-      // vamos incluir local e data na descrição
-      const descricaoCompleta = `${formData.descricao}\n\nLocal: ${formData.local}\nData: ${new Date(formData.data).toLocaleString('pt-BR')}`;
-      
-      const alertaData = {
-        titulo: formData.titulo,
-        descricao: descricaoCompleta,
-        tipo: formData.tipo,
-      };
-
-      await criarAlerta(alertaData);
+      await criarAlerta(formData);
       
       setSucesso("Alerta cadastrado com sucesso!");
       
-      // Limpa o formulário
       setFormData({
-        titulo: "",
-        descricao: "",
         tipo: "informativo",
+        descricao: "",
         local: "",
         data: "",
       });
 
-      // Redireciona após 2 segundos
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
@@ -109,29 +80,6 @@ export default function AlertaForm() {
       <h2>Cadastrar Novo Alerta</h2>
 
       <div>
-        <input
-          type="text"
-          name="titulo"
-          placeholder="Título do Alerta *"
-          value={formData.titulo}
-          onChange={handleChange}
-          disabled={carregando}
-          required
-        />
-      </div>
-
-      <div>
-        <textarea
-          name="descricao"
-          placeholder="Descrição detalhada *"
-          value={formData.descricao}
-          onChange={handleChange}
-          disabled={carregando}
-          required
-        />
-      </div>
-
-      <div>
         <select
           name="tipo"
           value={formData.tipo}
@@ -145,6 +93,18 @@ export default function AlertaForm() {
             </option>
           ))}
         </select>
+      </div>
+
+      <div>
+        <textarea
+          name="descricao"
+          placeholder="Descrição detalhada *"
+          value={formData.descricao}
+          onChange={handleChange}
+          disabled={carregando}
+          required
+          rows={4}
+        />
       </div>
 
       <div>
@@ -183,7 +143,7 @@ export default function AlertaForm() {
 
       <div className="nav-links">
         <Link to="/dashboard">Voltar ao Dashboard</Link>
-        <Link to="/">Sair</Link>
+        <Link to="/lista-alertas">Ver Lista de Alertas</Link>
       </div>
     </form>
   );

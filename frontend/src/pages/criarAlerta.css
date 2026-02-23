@@ -4,85 +4,129 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #062b16;
+  background: linear-gradient(135deg, #062b16 0%, #0a4a2a 100%);
   padding: 20px;
 }
 
 .alerta-card {
-  background-color: #08361d;
+  background: rgba(8, 54, 29, 0.95);
+  backdrop-filter: blur(10px);
   padding: 40px;
-  border-radius: 10px;
+  border-radius: 20px;
   width: 100%;
   max-width: 500px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .alerta-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
 .alerta-form h2 {
   color: white;
   text-align: left;
   margin-bottom: 10px;
-  font-size: 24px;
+  font-size: 28px;
+  background: linear-gradient(135deg, #2f80ed, #56ccf2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .alerta-form input,
 .alerta-form select,
 .alerta-form textarea {
   width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  border: 2px solid transparent;
   background: #e5e5e5;
-  font-size: 14px;
+  font-size: 15px;
   font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.alerta-form input:focus,
+.alerta-form select:focus,
+.alerta-form textarea:focus {
+  outline: none;
+  border-color: #2f80ed;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(47, 128, 237, 0.3);
 }
 
 .alerta-form textarea {
-  min-height: 100px;
+  min-height: 120px;
   resize: vertical;
 }
 
 .alerta-form select {
   cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
 }
 
 .alerta-form button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border-radius: 8px;
   border: none;
-  background-color: #2f80ed;
+  background: linear-gradient(135deg, #2f80ed, #56ccf2);
   color: white;
   font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.3s ease;
   margin-top: 10px;
 }
 
-.alerta-form button:hover {
-  background-color: #1c63c7;
+.alerta-form button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(47, 128, 237, 0.4);
 }
 
 .alerta-form button:disabled {
-  background-color: #cccccc;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
 .erro {
-  color: #ff6b6b;
+  color: #e74c3c;
   font-size: 14px;
   margin-top: 5px;
+  padding: 10px;
+  background: rgba(231, 76, 60, 0.1);
+  border-radius: 6px;
+  border-left: 3px solid #e74c3c;
 }
 
 .sucesso {
-  color: #4caf50;
+  color: #2ecc71;
   font-size: 14px;
   margin-top: 5px;
+  padding: 10px;
+  background: rgba(46, 204, 113, 0.1);
+  border-radius: 6px;
+  border-left: 3px solid #2ecc71;
 }
 
 .campo-info {
@@ -95,14 +139,18 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 .nav-links a {
   color: #2f80ed;
   text-decoration: none;
   font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 .nav-links a:hover {
-  text-decoration: underline;
+  color: #56ccf2;
+  transform: translateX(5px);
 }
